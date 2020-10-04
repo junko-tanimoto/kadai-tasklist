@@ -1,0 +1,18 @@
+<h1>タスク詳細</h1>
+
+<h2><%= link_to '一覧に戻る', tasks_path, class:"btn btn-primary" %>
+<%= link_to 'このタスクを編集する', edit_task_path(@tasks), class: 'btn btn-secondary' %></h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>ステータス</th>
+        <td><%= @tasks.status %></td>
+    </tr>
+    <tr>
+        <th>タスク内容</th>
+        <td><%= @tasks. content %></td>
+    </tr>
+</table>
+
+
+<%= link_to 'このタスクを削除する', @tasks, method: :delete, data: { confirm: '本当に削除してよろしいですか'}, class: 'btn btn-danger' %>

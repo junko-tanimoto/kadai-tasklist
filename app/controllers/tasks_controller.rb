@@ -26,7 +26,6 @@ class TasksController < ApplicationController
         end
     end
     
-    
     def edit
         #set_task
         #@tasks = Task.find(params[:id]) before_action利用

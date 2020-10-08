@@ -1,21 +1,27 @@
 class TasksController < ApplicationController
-    before_action :set_task, only: [:show, :edit, :update, :destroy]
+    before_action :set_task, only: [:show, :destroy]
 
     def index
-        @tasks = Task.all.page(params[:page]).per(10)
+        if logged_in?
+        #@task = current_user.tasks.build　#投稿の作成だから今回は不要
+        @tasks = current_user.tasks.order(id: :desc).page(params[:page])
+        #@tasks = Task.all.page(params[:page]).per(10)
+        end
     end
-
+    
     def show
         #set_task
         #@tasks = Task.find(params[:id])before_action使用
     end
     
     def new
-        @tasks = Task.new
+        #@tasks = Task.new
+        @task = current_user.tasks.new#一対多反映機能
     end
     
     def create
-        @tasks = Task.new(task_params)
+        #@tasks = Task.new(task_params)
+        @tasks = current_user.tasks.new(task_params) #一対多反映機能
         
         if @tasks.save
             flash[:success] = 'タスクが正常に入力されました'
@@ -24,20 +30,22 @@ class TasksController < ApplicationController
             flash.now[:danger] = 'タスクが正常に入力されませんでした'
             render :new
         end
+        
     end
+    
     
     def edit
         #set_task
-        #@tasks = Task.find(params[:id]) before_action利用
+        @task = Task.find(params[:id])
     end
     
     def update
         #set_task
-        #@tasks = Task.find(params[:id])
+        @task = Task.find(params[:id])
         
-        if @tasks.update(task_params)
+        if @task.update(task_params)
             flash[:success] = 'タスクは正常に更新されました'
-            redirect_to @tasks
+            redirect_to @task
         else flash.now[:danger] = 'タスクは更新されませんでした'
             render :edit
         end

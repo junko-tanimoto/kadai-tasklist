@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    #@tasks = @user.task.order(id: :desc).page(params[:page])
+    @tasks = @user.task.order(id: :desc).page(params[:page])
     #counts(@user)
   end
 
@@ -19,8 +19,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     
     if @user.save
-      flash[:success] = 'ユーザを登録しました。'
-      redirect_to @user
+      flash[:success] = 'ユーザを登録しました。「ログイン」よりアカウントへログインいただけます。'
+      redirect_to root_url
     else
       flash.now[:danger] = 'ユーザの登録に失敗しました。'
       render :new

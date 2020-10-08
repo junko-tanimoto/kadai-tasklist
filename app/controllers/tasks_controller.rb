@@ -4,7 +4,7 @@ class TasksController < ApplicationController
     def index
         if logged_in?
         #@task = current_user.tasks.build　#投稿の作成だから今回は不要
-        @tasks = current_user.tasks.order(id: :desc).page(params[:page])
+        @tasks = current_user.tasks.order(id: :desc).page(params[:page]).per(10)
         #@tasks = Task.all.page(params[:page]).per(10)
         end
     end
@@ -21,11 +21,11 @@ class TasksController < ApplicationController
     
     def create
         #@tasks = Task.new(task_params)
-        @tasks = current_user.tasks.new(task_params) #一対多反映機能
+        @task = current_user.tasks.new(task_params) #一対多反映機能
         
-        if @tasks.save
+        if @task.save
             flash[:success] = 'タスクが正常に入力されました'
-            redirect_to @tasks
+            redirect_to @task
         else
             flash.now[:danger] = 'タスクが正常に入力されませんでした'
             render :new

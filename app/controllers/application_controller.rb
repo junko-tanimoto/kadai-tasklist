@@ -1,9 +1,9 @@
 class ApplicationController < ActionController::Base
-     helper_method :logged_in?
+    
      
-     include SessionsHelper
+    include SessionsHelper
      
-     private
+    private
 
   def require_user_logged_in
     unless logged_in?

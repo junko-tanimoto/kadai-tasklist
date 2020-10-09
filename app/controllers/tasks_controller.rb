@@ -1,5 +1,7 @@
 class TasksController < ApplicationController
     before_action :set_task, only: [:show, :destroy]
+    before_action :require_user_logged_in
+    before_action :correct_user, only: [:destroy]
 
     def index
         if logged_in?
@@ -11,12 +13,12 @@ class TasksController < ApplicationController
     
     def show
         #set_task
-        #@tasks = Task.find(params[:id])before_action使用
+        #@tasks = Task.find(params[:id]) #before_action使用
     end
     
     def new
         #@tasks = Task.new
-        @task = current_user.tasks.new#一対多反映機能
+        @task = current_user.tasks.new #一対多反映機能
     end
     
     def create
@@ -68,5 +70,12 @@ class TasksController < ApplicationController
     
     def task_params
         params.require(:task).permit(:content, :status)
+    end
+    
+    def correct_user
+        @tasks = current_user.tasks.find_by(id: params[:id])
+     unless @tasks
+        redirect_to root_url
+     end
     end
 end

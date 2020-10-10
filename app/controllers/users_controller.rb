@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    #@user = User.find(params[:id]) 不要なメソッド
     @tasks = @user.tasks.order(id: :desc).page(params[:page]).per(10)
     
   end

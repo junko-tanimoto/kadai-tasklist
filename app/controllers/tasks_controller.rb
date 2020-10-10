@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
     before_action :set_task, only: [:show, :destroy]
     before_action :require_user_logged_in
-    before_action :correct_user, only: [:destroy]
+    before_action :correct_user, only: [:edit, :destroy]
 
     def index
         if logged_in?
@@ -26,7 +26,7 @@ class TasksController < ApplicationController
         @task = current_user.tasks.new(task_params) #一対多反映機能
         
         if @task.save
-            flash[:success] = 'タスクが正常に入力されました'
+            flash[:success] = 'タスクが正常に入力されました。'
             redirect_to @task
         else
             flash.now[:danger] = 'タスクが正常に入力されませんでした'
@@ -48,7 +48,7 @@ class TasksController < ApplicationController
         if @task.update(task_params)
             flash[:success] = 'タスクは正常に更新されました'
             redirect_to @task
-        else flash.now[:danger] = 'タスクは更新されませんでした'
+        else flash.now[:danger] = 'タスクは更新されませんでした。'
             render :edit
         end
     end
@@ -58,7 +58,7 @@ class TasksController < ApplicationController
         #@tasks = Task.find(params[:id]) before_action利用
         @tasks.destroy
         
-        flash[:success] = 'タスクは正常に削除されました'
+        flash[:success] = 'タスクは正常に削除されました。'
         redirect_to tasks_url
     end
 

@@ -1,5 +1,10 @@
 <h1>タスク作成ページ</h1>
 
+<%= form_with(model: @task, local: true) do |f| %>
+<%= render 'layouts/error_messages', model: f.object %>
+
 <%= render 'form', task: @task %>
+
+<% end %>
 
 <%= link_to 'タスク一覧に戻る', tasks_path %>

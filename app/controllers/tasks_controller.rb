@@ -4,11 +4,9 @@ class TasksController < ApplicationController
     before_action :correct_user, only: [:edit, :update, :show,:destroy]
 
     def index
-        if logged_in?
         #@task = current_user.tasks.build　#投稿の作成だから今回は不要
         @tasks = current_user.tasks.order(id: :desc).page(params[:page]).per(10)
         #@tasks = Task.all.page(params[:page]).per(10)
-        end
     end
     
     def show

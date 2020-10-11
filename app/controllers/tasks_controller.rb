@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
-    before_action :set_task, only: [:show, :destroy]
+    #before_action :set_task, only: [:show, :destroy] #before_actionのcorrect_userで定義済み
     before_action :require_user_logged_in
-    before_action :correct_user, only: [:edit, :show,:destroy]
+    before_action :correct_user, only: [:edit, :update, :show,:destroy]
 
     def index
         if logged_in?
@@ -64,9 +64,9 @@ class TasksController < ApplicationController
 
   private 
   
-    def set_task
-        @tasks = Task.find(params[:id]) 
-    end  
+    #def set_task #correct_userメソッドで定義済みの為不要
+        #@tasks = Task.find(params[:id]) 
+    #end  
     
     def task_params
         params.require(:task).permit(:content, :status)

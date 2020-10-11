@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
-  before_action :require_user_logged_in, only: [:show]
+  #before_action :require_user_logged_in, only: [:show] ユーザー詳細画面がないので必要ない
   
 
-  def show
-    @tasks = @user.tasks.order(id: :desc).page(params[:page]).per(10)
-  end
+  #def show ユーザー詳細画面がないので必要ない
+    #@tasks = @user.tasks.order(id: :desc).page(params[:page]).per(10)
+  #end
 
   def new
     @user = User.new
@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     
     if @user.save
       flash[:success] = 'ユーザを登録しました。'
-      redirect_to @user
+      redirect_to root_url
     else
       flash.now[:danger] = 'ユーザの登録に失敗しました。'
       render :new
